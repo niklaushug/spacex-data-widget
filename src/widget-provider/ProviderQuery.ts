@@ -4,20 +4,26 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-// @ts-ignore
 import LaunchesPast from './LaunchesPast.query.graphql';
+
+interface MissionI {
+  // eslint-disable-next-line camelcase
+  mission_name: string;
+}
+
+interface LaunchesPastI {
+  launchesPast: MissionI[];
+}
 
 @customElement('provider-query')
 export class ProviderQuery extends LitElement {
   query = new ApolloQueryController(this, LaunchesPast, {
     variables: {
-      limit: 3,
+      limit: 5,
     },
   });
 
   render() {
-    console.log(this.query.data);
-
     return html`
       <h2>ProviderQuery</h2>
       <article class=${classMap({ skeleton: this.query.loading })}>
@@ -25,12 +31,9 @@ export class ProviderQuery extends LitElement {
           ${this.query.error?.message}
         </p>
         <ul>
-          ${
-            // @ts-ignore
-            this.query.data?.launchesPast?.map(
-              (launch: any) => html` <li>${launch.mission_name}</li> `
-            )
-          }
+          ${(this.query.data as LaunchesPastI)?.launchesPast?.map(
+            (launch: MissionI) => html` <li>${launch.mission_name}</li> `
+          )}
         </ul>
       </article>
     `;

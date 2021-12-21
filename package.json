@@ -15,6 +15,7 @@
   "dependencies": {
     "@apollo-elements/components": "^2.1.1",
     "@apollo-elements/core": "^1.1.0",
+    "@apollo/client": "^3.5.6",
     "lit": "^2.0.2"
   },
   "devDependencies": {
