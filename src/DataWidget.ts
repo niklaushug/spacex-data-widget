@@ -1,6 +1,10 @@
 import { LitElement, html, css } from 'lit';
-import { property } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
+import './widget-provider/WidgetProvider.js';
+import './widget-display/WidgetDisplay.js';
+
+@customElement('data-widget')
 export class DataWidget extends LitElement {
   @property({ type: String }) title = 'Data Widget';
 
@@ -10,6 +14,8 @@ export class DataWidget extends LitElement {
     return html`
       <main>
         <h1>${this.title}</h1>
+        <widget-provider></widget-provider>
+        <widget-display></widget-display>
       </main>
     `;
   }

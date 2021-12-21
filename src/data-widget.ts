@@ -1,3 +1,1 @@
-import { DataWidget } from './DataWidget.js';
-
-customElements.define('data-widget', DataWidget);
+import './DataWidget.js';
