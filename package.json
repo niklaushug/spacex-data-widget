@@ -1,6 +1,6 @@
 {
-  "name": "data-widget",
-  "description": "Webcomponent data-widget following open-wc recommendations",
+  "name": "spacex-data-widget",
+  "description": "Webcomponent to filter and display data from api.spacex.land/graphql.",
   "license": "MIT",
   "author": "data-widget",
   "version": "0.0.0",
@@ -13,9 +13,12 @@
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\""
   },
   "dependencies": {
+    "@apollo-elements/components": "^2.1.1",
+    "@apollo-elements/core": "^1.1.0",
     "lit": "^2.0.2"
   },
   "devDependencies": {
+    "@apollo-elements/rollup-plugin-graphql": "^1.0.3",
     "@babel/preset-env": "^7.16.4",
     "@custom-elements-manifest/analyzer": "^0.4.17",
     "@open-wc/building-rollup": "^2.0.1",
@@ -25,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@web/dev-server": "^0.1.28",
+    "@web/dev-server-rollup": "^0.3.13",
     "@web/rollup-plugin-html": "^1.10.1",
     "@web/rollup-plugin-import-meta-assets": "^1.0.7",
     "babel-plugin-template-html-minifier": "^4.1.0",

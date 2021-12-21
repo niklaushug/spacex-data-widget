@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import '@apollo-elements/components/apollo-client';
 
 import './ProviderFilter.js';
 import './ProviderQuery.js';
@@ -9,8 +10,10 @@ export class WidgetProvider extends LitElement {
   render() {
     return html`
       <p>WidgetProvider</p>
-      <provider-filter></provider-filter>
-      <provider-query></provider-query>
+      <apollo-client uri="https://api.spacex.land/graphql/">
+        <provider-filter></provider-filter>
+        <provider-query></provider-query>
+      </apollo-client>
     `;
   }
 }
