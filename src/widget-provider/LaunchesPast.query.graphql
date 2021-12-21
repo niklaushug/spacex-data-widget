@@ -1,5 +1,5 @@
-query LaunchesPast($limit: Int) {
-  launchesPast(limit: $limit) {
+query LaunchesPast($limit: Int, $missionName: String) {
+  launchesPast(limit: $limit, find: {mission_name: $missionName}) {
     mission_name
   }
 }
