@@ -25,7 +25,7 @@ export class WidgetDisplay extends LitElement {
     return html`
       <p>WidgetDisplay</p>
       <display-mode></display-mode>
-      <display-table></display-table>
+      <display-table .data="${this.data}"></display-table>
       <display-chart-bar .data="${this.data}"></display-chart-bar>
       <display-chart-pie .data="${this.data}"></display-chart-pie>
     `;
