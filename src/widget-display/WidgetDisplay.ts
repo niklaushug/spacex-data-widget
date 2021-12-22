@@ -1,35 +1,27 @@
 import { html, LitElement } from 'lit';
-import { DocumentNode } from '@apollo/client';
-import { OperationVariables } from '@apollo/client/core';
 import { ApolloQueryController } from '@apollo-elements/core';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 import { lazyLoad } from '../lazyLoadDirective.js';
-import { ChartData, DisplayMode } from '../types.js';
+import { ChartData, DisplayMode, ApolloQueryControllerI } from '../types.js';
 import { client, displayModeVar } from '../apollo.js';
+
 import DisplayModeGql from './DisplayMode.query.graphql';
-
-import { LAUNCHES_PAST } from './launchesPast.js';
-
-type ApolloQueryControllerI = ApolloQueryController<
-  DocumentNode,
-  { [key: string]: any } | OperationVariables
->;
+import LaunchesPerYearGql from './LaunchesPerYear.query.graphql';
 
 @customElement('widget-display')
 export class WidgetDisplay extends LitElement {
-  @property({ type: Array })
-  data?: ChartData[] = [];
-
-  query: ApolloQueryControllerI = new ApolloQueryController(
+  queryDisplayMode: ApolloQueryControllerI = new ApolloQueryController(
     this,
     DisplayModeGql,
     { client }
   );
 
-  firstUpdated() {
-    this.prepareDataForCharts();
-  }
+  queryLaunchesPerYear: ApolloQueryControllerI = new ApolloQueryController(
+    this,
+    LaunchesPerYearGql,
+    { client }
+  );
 
   // eslint-disable-next-line class-methods-use-this
   handleDisplayMode(event: Event) {
@@ -65,37 +57,27 @@ export class WidgetDisplay extends LitElement {
     `;
   }
 
-  private prepareDataForCharts() {
-    // TODO improve this: check out Map/WeakMap and or UnderscoreJS
-    const launchesYear = LAUNCHES_PAST.reduce((acc, cur) => {
-      // @ts-ignore
-      acc[cur.launch_year] = (acc[cur.launch_year] || 0) + 1;
-      return acc;
-    }, {});
-
-    this.data = Object.entries(launchesYear).map(([year, size]) => ({
-      name: year,
-      y: size,
-    }));
-  }
-
   private renderCurrentView() {
+    const data: Array<ChartData> =
+      // @ts-ignore
+      this.queryLaunchesPerYear.data.launchesPerYear;
+
     // @ts-ignore
-    switch (this.query.data.displayMode) {
+    switch (this.queryDisplayMode.data.displayMode) {
       case DisplayMode.BAR:
         return lazyLoad(
           import('./DisplayChartBar.js'),
-          html` <display-chart-bar .data="${this.data}"></display-chart-bar> `
+          html` <display-chart-bar .data="${data}"></display-chart-bar> `
         );
       case DisplayMode.PIE:
         return lazyLoad(
           import('./DisplayChartPie.js'),
-          html` <display-chart-pie .data="${this.data}"></display-chart-pie> `
+          html` <display-chart-pie .data="${data}"></display-chart-pie> `
         );
       default:
         return lazyLoad(
           import('./DisplayTable.js'),
-          html` <display-table .data="${this.data}"></display-table> `
+          html` <display-table .data="${data}"></display-table> `
         );
     }
   }

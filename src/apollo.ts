@@ -5,11 +5,14 @@ import {
   ReactiveVar,
 } from '@apollo/client/core';
 import { DisplayMode } from './types.js';
+import { prepareDataForCharts } from './aggregateData.js';
 
 // @ts-ignore
 export const displayModeVar: ReactiveVar<DisplayMode> = makeVar(
   DisplayMode.TABLE
 );
+
+export const launchesPerYearVar: ReactiveVar<any> = makeVar([]);
 
 export const cache = new InMemoryCache({
   typePolicies: {
@@ -18,6 +21,20 @@ export const cache = new InMemoryCache({
         displayMode: {
           read() {
             return displayModeVar();
+          },
+        },
+        launchesPast: {
+          merge(existing = [], incoming) {
+            // TODO Merge or replacement?
+            const merged = [...existing, ...incoming];
+            // @ts-ignore
+            launchesPerYearVar(prepareDataForCharts(merged));
+            return merged;
+          },
+        },
+        launchesPerYear: {
+          read() {
+            return launchesPerYearVar();
           },
         },
       },

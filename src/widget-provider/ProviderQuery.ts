@@ -4,7 +4,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { LaunchesPastI, MissionI } from '../types.js';
+import { LaunchesPastI, LaunchPastI } from '../types.js';
 
 import LaunchesPastGql from './LaunchesPast.query.graphql';
 
@@ -46,7 +46,7 @@ export class ProviderQuery extends LitElement {
         </p>
         <ul>
           ${(this.query.data as LaunchesPastI)?.launchesPast?.map(
-            (launch: MissionI) => html` <li>${launch.mission_name}</li> `
+            (launch: LaunchPastI) => html` <li>${launch.mission_name}</li> `
           )}
         </ul>
       </article>
