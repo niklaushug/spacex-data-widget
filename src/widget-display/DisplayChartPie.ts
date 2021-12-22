@@ -1,9 +1,31 @@
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+
+import { ChartData } from './types.js';
 
 @customElement('display-chart-pie')
 export class DisplayChartPie extends LitElement {
+  @property({ type: Array }) data: ChartData[] = [];
+
   render() {
-    return html` <p>DisplayChartPie</p> `;
+    return html`
+      <h2>DisplayChartPie</h2>
+      <highcharts-chart
+        type="pie"
+        color-by-point
+        .data=${this.data}
+        x-axis='{
+            "type": "category",
+            "title": {
+                "text": "Year"
+            }
+          }'
+        y-axis='{
+          "title": {
+              "text": "Count launches"
+          }
+        }'
+      ></highcharts-chart>
+    `;
   }
 }

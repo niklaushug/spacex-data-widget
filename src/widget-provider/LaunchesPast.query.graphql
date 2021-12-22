@@ -1,5 +1,6 @@
 query LaunchesPast($limit: Int, $missionName: String) {
   launchesPast(limit: $limit, find: {mission_name: $missionName}) {
     mission_name
+    launch_year
   }
 }

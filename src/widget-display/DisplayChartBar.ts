@@ -1,9 +1,30 @@
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+
+import { ChartData } from './types.js';
 
 @customElement('display-chart-bar')
 export class DisplayChartBar extends LitElement {
+  @property({ type: Array }) data: ChartData[] = [];
+
   render() {
-    return html` <p>DisplayChartBar</p> `;
+    return html`
+      <h2>DisplayChartBar</h2>
+      <highcharts-chart
+        type="column"
+        .data=${this.data}
+        x-axis='{
+            "type": "category",
+            "title": {
+                "text": "Year"
+            }
+          }'
+        y-axis='{
+          "title": {
+              "text": "Count launches"
+          }
+        }'
+      ></highcharts-chart>
+    `;
   }
 }
