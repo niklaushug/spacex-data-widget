@@ -37,12 +37,10 @@ export class WidgetProvider extends LitElement {
         @valueChanged="${this.valueChanged}"
       ></input-text>
 
-      <apollo-client uri="https://api.spacex.land/graphql/">
-        <provider-query
-          .limit="${this.limit}"
-          .missionName="${this.missionName}"
-        ></provider-query>
-      </apollo-client>
+      <provider-query
+        .limit="${this.limit}"
+        .missionName="${this.missionName}"
+      ></provider-query>
     `;
   }
 }

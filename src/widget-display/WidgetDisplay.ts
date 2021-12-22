@@ -1,30 +1,44 @@
 import { html, LitElement } from 'lit';
+import { DocumentNode } from '@apollo/client';
+import { OperationVariables } from '@apollo/client/core';
+import { ApolloQueryController } from '@apollo-elements/core';
 import { customElement, property } from 'lit/decorators.js';
 
 import { lazyLoad } from '../lazyLoadDirective.js';
-
 import { ChartData, DisplayMode } from '../types.js';
+import { client, displayModeVar } from '../apollo.js';
+import DisplayModeGql from './DisplayMode.query.graphql';
 
 import { LAUNCHES_PAST } from './launchesPast.js';
+
+type ApolloQueryControllerI = ApolloQueryController<
+  DocumentNode,
+  { [key: string]: any } | OperationVariables
+>;
 
 @customElement('widget-display')
 export class WidgetDisplay extends LitElement {
   @property({ type: Array })
   data?: ChartData[] = [];
 
-  @property({ type: String })
-  mode: DisplayMode = DisplayMode.TABLE;
+  query: ApolloQueryControllerI = new ApolloQueryController(
+    this,
+    DisplayModeGql,
+    { client }
+  );
 
   firstUpdated() {
     this.prepareDataForCharts();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handleDisplayMode(event: Event) {
     const mode: DisplayMode = (event.target as HTMLButtonElement).dataset
       .displayMode as DisplayMode;
-    this.mode = Object.values(DisplayMode).includes(mode)
-      ? mode
-      : DisplayMode.TABLE;
+
+    displayModeVar(
+      Object.values(DisplayMode).includes(mode) ? mode : DisplayMode.TABLE
+    );
   }
 
   render() {
@@ -66,7 +80,8 @@ export class WidgetDisplay extends LitElement {
   }
 
   private renderCurrentView() {
-    switch (this.mode) {
+    // @ts-ignore
+    switch (this.query.data.displayMode) {
       case DisplayMode.BAR:
         return lazyLoad(
           import('./DisplayChartBar.js'),

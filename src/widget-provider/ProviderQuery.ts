@@ -6,7 +6,7 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import { LaunchesPastI, MissionI } from '../types.js';
 
-import LaunchesPast from './LaunchesPast.query.graphql';
+import LaunchesPastGql from './LaunchesPast.query.graphql';
 
 @customElement('provider-query')
 export class ProviderQuery extends LitElement {
@@ -32,7 +32,7 @@ export class ProviderQuery extends LitElement {
     }
   }
 
-  query = new ApolloQueryController(this, LaunchesPast, {
+  query = new ApolloQueryController(this, LaunchesPastGql, {
     variables: {
       ...this.filters,
     },
