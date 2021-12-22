@@ -2,12 +2,16 @@ import { html, LitElement } from 'lit';
 import { ApolloQueryController } from '@apollo-elements/core';
 import { customElement } from 'lit/decorators.js';
 
-import { lazyLoad } from '../lazyLoadDirective.js';
-import { ChartData, DisplayMode, ApolloQueryControllerI } from '../types.js';
+import { lazyLoad } from '../helpers/lazyLoadDirective.js';
+import {
+  ChartData,
+  DisplayMode,
+  ApolloQueryControllerI,
+} from '../typescript/types.js';
 import { client, displayModeVar } from '../apollo.js';
 
-import DisplayModeGql from './DisplayMode.query.graphql';
-import LaunchesPerYearGql from './LaunchesPerYear.query.graphql';
+import DisplayModeGql from '../graphql/DisplayMode.query.graphql';
+import LaunchesPerYearGql from '../graphql/LaunchesPerYear.query.graphql';
 
 @customElement('widget-display')
 export class WidgetDisplay extends LitElement {
@@ -66,17 +70,17 @@ export class WidgetDisplay extends LitElement {
     switch (this.queryDisplayMode.data.displayMode) {
       case DisplayMode.BAR:
         return lazyLoad(
-          import('./DisplayChartBar.js'),
+          import('./ChartBar.js'),
           html` <display-chart-bar .data="${data}"></display-chart-bar> `
         );
       case DisplayMode.PIE:
         return lazyLoad(
-          import('./DisplayChartPie.js'),
+          import('./ChartPie.js'),
           html` <display-chart-pie .data="${data}"></display-chart-pie> `
         );
       default:
         return lazyLoad(
-          import('./DisplayTable.js'),
+          import('./Table.js'),
           html` <display-table .data="${data}"></display-table> `
         );
     }

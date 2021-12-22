@@ -9,7 +9,7 @@ import './InputText.js';
 @customElement('widget-provider')
 export class WidgetProvider extends LitElement {
   @property({ type: Number })
-  limit = 5;
+  limit = 50;
 
   @property({ type: String })
   missionName = '';
@@ -28,7 +28,7 @@ export class WidgetProvider extends LitElement {
         @valueChanged="${this.valueChanged}"
       ></input-number>
 
-      <br />
+      <br /><br />
 
       <input-text
         key="missionName"
@@ -36,6 +36,8 @@ export class WidgetProvider extends LitElement {
         .value="${this.missionName}"
         @valueChanged="${this.valueChanged}"
       ></input-text>
+
+      <br /><br />
 
       <provider-query
         .limit="${this.limit}"

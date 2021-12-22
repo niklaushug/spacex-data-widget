@@ -4,8 +4,8 @@ import {
   makeVar,
   ReactiveVar,
 } from '@apollo/client/core';
-import { DisplayMode } from './types.js';
-import { prepareDataForCharts } from './aggregateData.js';
+import { DisplayMode } from './typescript/types.js';
+import { prepareDataForCharts } from './helpers/aggregateData.js';
 
 // @ts-ignore
 export const displayModeVar: ReactiveVar<DisplayMode> = makeVar(

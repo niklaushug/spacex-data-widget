@@ -1,18 +1,15 @@
 import { ApolloQueryController } from '@apollo-elements/core';
-import { LitElement, html } from 'lit';
+import { LitElement } from 'lit';
 
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 
-import { LaunchesPastI, LaunchPastI } from '../types.js';
-
-import LaunchesPastGql from './LaunchesPast.query.graphql';
+import LaunchesPastGql from '../graphql/LaunchesPast.query.graphql';
 
 @customElement('provider-query')
 export class ProviderQuery extends LitElement {
   @property({ type: Object })
   filters = {
-    limit: 5,
+    limit: 50,
     missionName: '',
   };
 
@@ -37,19 +34,4 @@ export class ProviderQuery extends LitElement {
       ...this.filters,
     },
   });
-
-  render() {
-    return html`
-      <article class=${classMap({ skeleton: this.query.loading })}>
-        <p id="error" ?hidden=${!this.query.error}>
-          ${this.query.error?.message}
-        </p>
-        <ul>
-          ${(this.query.data as LaunchesPastI)?.launchesPast?.map(
-            (launch: LaunchPastI) => html` <li>${launch.mission_name}</li> `
-          )}
-        </ul>
-      </article>
-    `;
-  }
 }

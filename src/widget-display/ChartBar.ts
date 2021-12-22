@@ -3,10 +3,10 @@ import { customElement, property } from 'lit/decorators.js';
 
 import 'highcharts-chart';
 
-import { ChartData } from '../types.js';
+import { ChartData } from '../typescript/types.js';
 
 @customElement('display-chart-bar')
-export class DisplayChartBar extends LitElement {
+export class ChartBar extends LitElement {
   @property({ type: Array })
   data: ChartData[] = [];
 
