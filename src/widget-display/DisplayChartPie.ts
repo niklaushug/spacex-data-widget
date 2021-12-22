@@ -1,6 +1,8 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import 'highcharts-chart';
+
 import { ChartData } from './types.js';
 
 @customElement('display-chart-pie')

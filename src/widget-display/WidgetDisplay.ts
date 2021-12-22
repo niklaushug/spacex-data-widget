@@ -1,33 +1,72 @@
-import { LitElement, html } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { dynamicImport } from '../helpers.js';
-import { ChartData } from './types.js';
+import { lazyLoad } from '../lazyLoadDirective.js';
 
-import './DisplayMode.js';
-import './DisplayTable.js';
+import { ChartData, DisplayMode } from './types.js';
 
 import { LAUNCHES_PAST } from './launchesPast.js';
-
-dynamicImport('./widget-display/DisplayChartBar.js');
-dynamicImport('./widget-display/DisplayChartPie.js');
-dynamicImport('/node_modules/highcharts-chart/highcharts-chart.js');
 
 @customElement('widget-display')
 export class WidgetDisplay extends LitElement {
   @property({ type: Array }) data?: ChartData[] = [];
 
+  @property({ type: String }) mode: DisplayMode = DisplayMode.TABLE;
+
   firstUpdated() {
     this.prepareDataForCharts();
+  }
+
+  handleDisplayMode(event: Event) {
+    const mode: DisplayMode = (event.target as HTMLButtonElement).dataset
+      .displayMode as DisplayMode;
+    this.mode = Object.values(DisplayMode).includes(mode)
+      ? mode
+      : DisplayMode.TABLE;
+  }
+
+  _renderCurrentView() {
+    switch (this.mode) {
+      case DisplayMode.BAR:
+        return lazyLoad(
+          import('./DisplayChartBar.js'),
+          html` <display-chart-bar .data="${this.data}"></display-chart-bar> `
+        );
+      case DisplayMode.PIE:
+        return lazyLoad(
+          import('./DisplayChartPie.js'),
+          html` <display-chart-pie .data="${this.data}"></display-chart-pie> `
+        );
+      default:
+        return lazyLoad(
+          import('./DisplayTable.js'),
+          html` <display-table .data="${this.data}"></display-table> `
+        );
+    }
   }
 
   render() {
     return html`
       <p>WidgetDisplay</p>
-      <display-mode></display-mode>
-      <display-table .data="${this.data}"></display-table>
-      <display-chart-bar .data="${this.data}"></display-chart-bar>
-      <display-chart-pie .data="${this.data}"></display-chart-pie>
+      <button
+        @click="${this.handleDisplayMode}"
+        data-display-mode="${DisplayMode.TABLE}"
+      >
+        Table
+      </button>
+      <button
+        @click="${this.handleDisplayMode}"
+        data-display-mode="${DisplayMode.BAR}"
+      >
+        Bar Chart
+      </button>
+      <button
+        @click="${this.handleDisplayMode}"
+        data-display-mode="${DisplayMode.PIE}"
+      >
+        Pie Chart
+      </button>
+      <main>${this._renderCurrentView()}</main>
     `;
   }
 
