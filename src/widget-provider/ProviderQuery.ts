@@ -4,20 +4,14 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { LaunchesPastI, MissionI } from '../types.js';
+
 import LaunchesPast from './LaunchesPast.query.graphql';
-
-interface MissionI {
-  // eslint-disable-next-line camelcase
-  mission_name: string;
-}
-
-interface LaunchesPastI {
-  launchesPast: MissionI[];
-}
 
 @customElement('provider-query')
 export class ProviderQuery extends LitElement {
-  @property({ type: Object }) filters = {
+  @property({ type: Object })
+  filters = {
     limit: 5,
     missionName: '',
   };
@@ -46,8 +40,6 @@ export class ProviderQuery extends LitElement {
 
   render() {
     return html`
-      <h2>ProviderQuery</h2>
-
       <article class=${classMap({ skeleton: this.query.loading })}>
         <p id="error" ?hidden=${!this.query.error}>
           ${this.query.error?.message}

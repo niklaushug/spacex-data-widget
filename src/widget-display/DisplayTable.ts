@@ -1,15 +1,15 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { ChartData } from './types.js';
+import { ChartData } from '../types.js';
 
 @customElement('display-table')
 export class DisplayTable extends LitElement {
-  @property({ type: Array }) data: ChartData[] = [];
+  @property({ type: Array })
+  data: ChartData[] = [];
 
   render() {
     return html`
-      <h2>DisplayTable</h2>
       <table>
         <thead>
           <tr>

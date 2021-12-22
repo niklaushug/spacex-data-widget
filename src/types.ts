@@ -9,3 +9,12 @@ export enum DisplayMode {
   PIE = 'pie',
   TABLE = 'table',
 }
+
+export interface MissionI {
+  // eslint-disable-next-line camelcase
+  mission_name: string;
+}
+
+export interface LaunchesPastI {
+  launchesPast: MissionI[];
+}

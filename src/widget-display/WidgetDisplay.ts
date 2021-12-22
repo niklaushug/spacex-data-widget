@@ -3,15 +3,17 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { lazyLoad } from '../lazyLoadDirective.js';
 
-import { ChartData, DisplayMode } from './types.js';
+import { ChartData, DisplayMode } from '../types.js';
 
 import { LAUNCHES_PAST } from './launchesPast.js';
 
 @customElement('widget-display')
 export class WidgetDisplay extends LitElement {
-  @property({ type: Array }) data?: ChartData[] = [];
+  @property({ type: Array })
+  data?: ChartData[] = [];
 
-  @property({ type: String }) mode: DisplayMode = DisplayMode.TABLE;
+  @property({ type: String })
+  mode: DisplayMode = DisplayMode.TABLE;
 
   firstUpdated() {
     this.prepareDataForCharts();
@@ -25,29 +27,8 @@ export class WidgetDisplay extends LitElement {
       : DisplayMode.TABLE;
   }
 
-  _renderCurrentView() {
-    switch (this.mode) {
-      case DisplayMode.BAR:
-        return lazyLoad(
-          import('./DisplayChartBar.js'),
-          html` <display-chart-bar .data="${this.data}"></display-chart-bar> `
-        );
-      case DisplayMode.PIE:
-        return lazyLoad(
-          import('./DisplayChartPie.js'),
-          html` <display-chart-pie .data="${this.data}"></display-chart-pie> `
-        );
-      default:
-        return lazyLoad(
-          import('./DisplayTable.js'),
-          html` <display-table .data="${this.data}"></display-table> `
-        );
-    }
-  }
-
   render() {
     return html`
-      <p>WidgetDisplay</p>
       <button
         @click="${this.handleDisplayMode}"
         data-display-mode="${DisplayMode.TABLE}"
@@ -66,7 +47,7 @@ export class WidgetDisplay extends LitElement {
       >
         Pie Chart
       </button>
-      <main>${this._renderCurrentView()}</main>
+      <main>${this.renderCurrentView()}</main>
     `;
   }
 
@@ -82,5 +63,25 @@ export class WidgetDisplay extends LitElement {
       name: year,
       y: size,
     }));
+  }
+
+  private renderCurrentView() {
+    switch (this.mode) {
+      case DisplayMode.BAR:
+        return lazyLoad(
+          import('./DisplayChartBar.js'),
+          html` <display-chart-bar .data="${this.data}"></display-chart-bar> `
+        );
+      case DisplayMode.PIE:
+        return lazyLoad(
+          import('./DisplayChartPie.js'),
+          html` <display-chart-pie .data="${this.data}"></display-chart-pie> `
+        );
+      default:
+        return lazyLoad(
+          import('./DisplayTable.js'),
+          html` <display-table .data="${this.data}"></display-table> `
+        );
+    }
   }
 }

@@ -3,11 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 
 @customElement('input-text')
 export class InputNumber extends LitElement {
-  @property({ type: String }) key = '';
+  @property({ type: String })
+  key = '';
 
-  @property({ type: String }) label = '';
+  @property({ type: String })
+  label = '';
 
-  @property({ type: String }) value = '';
+  @property({ type: String })
+  value = '';
 
   changeHandler(event: InputEvent): void {
     this.value = (event.target as HTMLInputElement).value;

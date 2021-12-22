@@ -8,9 +8,11 @@ import './InputText.js';
 
 @customElement('widget-provider')
 export class WidgetProvider extends LitElement {
-  @property({ type: Number }) limit = 5;
+  @property({ type: Number })
+  limit = 5;
 
-  @property({ type: String }) missionName = '';
+  @property({ type: String })
+  missionName = '';
 
   valueChanged(event: CustomEvent): void {
     // @ts-ignore
@@ -19,8 +21,6 @@ export class WidgetProvider extends LitElement {
 
   render() {
     return html`
-      <h2>Filter</h2>
-
       <input-number
         key="limit"
         label="Limit"
