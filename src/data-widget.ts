@@ -1,1 +1,1 @@
-import './DataWidget.js';
+import './DataWidget';

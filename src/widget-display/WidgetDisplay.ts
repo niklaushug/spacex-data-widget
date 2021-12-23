@@ -2,13 +2,13 @@ import { html, LitElement } from 'lit';
 import { ApolloQueryController } from '@apollo-elements/core';
 import { customElement } from 'lit/decorators.js';
 
-import { lazyLoad } from '../helpers/lazyLoadDirective.js';
+import { lazyLoad } from '../helpers/lazyLoadDirective';
 import {
   ChartData,
   DisplayMode,
   ApolloQueryControllerI,
-} from '../typescript/types.js';
-import { client, displayModeVar } from '../apollo.js';
+} from '../typescript/types';
+import { client, displayModeVar } from '../apollo';
 
 import DisplayModeGql from '../graphql/DisplayMode.query.graphql';
 import LaunchesPerYearGql from '../graphql/LaunchesPerYear.query.graphql';
@@ -70,17 +70,17 @@ export class WidgetDisplay extends LitElement {
     switch (this.queryDisplayMode.data.displayMode) {
       case DisplayMode.BAR:
         return lazyLoad(
-          import('./ChartBar.js'),
+          import('./ChartBar'),
           html` <display-chart-bar .data="${data}"></display-chart-bar> `
         );
       case DisplayMode.PIE:
         return lazyLoad(
-          import('./ChartPie.js'),
+          import('./ChartPie'),
           html` <display-chart-pie .data="${data}"></display-chart-pie> `
         );
       default:
         return lazyLoad(
-          import('./Table.js'),
+          import('./Table'),
           html` <display-table .data="${data}"></display-table> `
         );
     }

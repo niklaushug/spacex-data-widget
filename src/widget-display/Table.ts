@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { ChartData } from '../typescript/types.js';
+import { ChartData } from '../typescript/types';
 
 @customElement('display-table')
 export class Table extends LitElement {

@@ -1,4 +1,4 @@
-import { LaunchesPastI, LaunchPastI } from '../typescript/types.js';
+import { LaunchesPastI, LaunchPastI } from '../typescript/types';
 
 export function prepareDataForCharts(data: LaunchesPastI) {
   // TODO improve this: check out Map/WeakMap and or UnderscoreJS

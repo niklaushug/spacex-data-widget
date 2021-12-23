@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 
 import 'highcharts-chart';
 
-import { ChartData } from '../typescript/types.js';
+import { ChartData } from '../typescript/types';
 
 @customElement('display-chart-bar')
 export class ChartBar extends LitElement {

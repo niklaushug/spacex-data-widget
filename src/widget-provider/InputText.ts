@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('input-text')
-export class InputNumber extends LitElement {
+export class InputText extends LitElement {
   @property({ type: String })
   key = '';
 

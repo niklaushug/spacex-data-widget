@@ -2,9 +2,9 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@apollo-elements/components/apollo-client';
 
-import './ProviderQuery.js';
-import './InputNumber.js';
-import './InputText.js';
+import './ProviderQuery';
+import './InputNumber';
+import './InputText';
 
 @customElement('widget-provider')
 export class WidgetProvider extends LitElement {
