@@ -10,7 +10,8 @@
     "build": "rimraf dist && tsc && rollup -c rollup.config.js && npm run analyze -- --exclude dist",
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
     "analyze": "cem analyze --litelement",
-    "start": "tsc && copyfiles src/**/*.graphql out-tsc/ && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\""
+    "start": "tsc && copyfiles src/**/*.query.graphql out-tsc/ && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
+    "types": "graphql-codegen"
   },
   "dependencies": {
     "@apollo-elements/components": "^2.1.1",
@@ -23,6 +24,9 @@
     "@apollo-elements/rollup-plugin-graphql": "^1.0.3",
     "@babel/preset-env": "^7.16.4",
     "@custom-elements-manifest/analyzer": "^0.4.17",
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.4.1",
+    "@graphql-codegen/typescript-operations": "^2.2.1",
     "@open-wc/building-rollup": "^2.0.1",
     "@open-wc/eslint-config": "^4.3.0",
     "@rollup/plugin-babel": "^5.3.0",
@@ -39,6 +43,7 @@
     "deepmerge": "^4.2.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "graphql": "^15.8.0",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.4",
     "prettier": "^2.4.1",

@@ -21,6 +21,7 @@ yarn-error.log
 /_site/
 /dist/
 /out-tsc/
+/src/typescript/generated-types.ts
 
 storybook-static
 custom-elements.json
