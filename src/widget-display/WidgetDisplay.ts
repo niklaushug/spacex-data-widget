@@ -1,59 +1,62 @@
-import { html, LitElement } from 'lit';
-import { ApolloQueryController } from '@apollo-elements/core';
+import { html, LitElement, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { DirectiveResult } from 'lit-html/directive';
+import { ApolloQueryController } from '@apollo-elements/core';
 
 import { lazyLoad } from '../helpers/lazyLoadDirective';
+import { ApolloQueryControllerI } from '../typescript/types';
 import {
   ChartData,
-  DisplayMode,
-  ApolloQueryControllerI,
-} from '../typescript/types';
+  DisplayMode as DisplayModeEnum,
+  LaunchesPerYearQuery,
+} from '../typescript/generated-types';
 import { client, displayModeVar } from '../apollo';
 
-import DisplayModeGql from '../graphql/DisplayMode.query.graphql';
-import LaunchesPerYearGql from '../graphql/LaunchesPerYear.query.graphql';
+import DisplayModeQuery from '../graphql/DisplayMode.query.graphql';
+import LaunchesPerYear from '../graphql/LaunchesPerYear.query.graphql';
 
 @customElement('widget-display')
 export class WidgetDisplay extends LitElement {
   queryDisplayMode: ApolloQueryControllerI = new ApolloQueryController(
     this,
-    DisplayModeGql,
+    DisplayModeQuery,
     { client }
   );
 
   queryLaunchesPerYear: ApolloQueryControllerI = new ApolloQueryController(
     this,
-    LaunchesPerYearGql,
+    LaunchesPerYear,
     { client }
   );
 
-  // eslint-disable-next-line class-methods-use-this
-  handleDisplayMode(event: Event) {
-    const mode: DisplayMode = (event.target as HTMLButtonElement).dataset
-      .displayMode as DisplayMode;
+  static handleDisplayMode(event: Event): void {
+    const mode: DisplayModeEnum = (event.target as HTMLButtonElement).dataset
+      .displayMode as DisplayModeEnum;
 
     displayModeVar(
-      Object.values(DisplayMode).includes(mode) ? mode : DisplayMode.TABLE
+      Object.values(DisplayModeEnum).includes(mode)
+        ? mode
+        : DisplayModeEnum.Table
     );
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <button
-        @click="${this.handleDisplayMode}"
-        data-display-mode="${DisplayMode.TABLE}"
+        @click="${WidgetDisplay.handleDisplayMode}"
+        data-display-mode="${DisplayModeEnum.Table}"
       >
         Table
       </button>
       <button
-        @click="${this.handleDisplayMode}"
-        data-display-mode="${DisplayMode.BAR}"
+        @click="${WidgetDisplay.handleDisplayMode}"
+        data-display-mode="${DisplayModeEnum.Bar}"
       >
         Bar Chart
       </button>
       <button
-        @click="${this.handleDisplayMode}"
-        data-display-mode="${DisplayMode.PIE}"
+        @click="${WidgetDisplay.handleDisplayMode}"
+        data-display-mode="${DisplayModeEnum.Pie}"
       >
         Pie Chart
       </button>
@@ -61,19 +64,19 @@ export class WidgetDisplay extends LitElement {
     `;
   }
 
-  private renderCurrentView() {
-    const data: Array<ChartData> =
-      // @ts-ignore
-      this.queryLaunchesPerYear.data.launchesPerYear;
+  private renderCurrentView(): DirectiveResult {
+    const data: ChartData = (
+      this.queryLaunchesPerYear.data as LaunchesPerYearQuery
+    ).launchesPerYear;
 
     // @ts-ignore
     switch (this.queryDisplayMode.data.displayMode) {
-      case DisplayMode.BAR:
+      case DisplayModeEnum.Bar:
         return lazyLoad(
           import('./ChartBar'),
           html` <display-chart-bar .data="${data}"></display-chart-bar> `
         );
-      case DisplayMode.PIE:
+      case DisplayModeEnum.Pie:
         return lazyLoad(
           import('./ChartPie'),
           html` <display-chart-pie .data="${data}"></display-chart-pie> `

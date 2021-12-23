@@ -1,16 +1,16 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import 'highcharts-chart';
 
-import { ChartData } from '../typescript/types';
+import { ChartData } from '../typescript/generated-types';
 
 @customElement('display-chart-pie')
 export class ChartPie extends LitElement {
   @property({ type: Array })
   data: ChartData[] = [];
 
-  render() {
+  render(): TemplateResult {
     return html`
       <highcharts-chart
         type="pie"

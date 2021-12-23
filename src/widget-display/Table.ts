@@ -1,14 +1,14 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { ChartData } from '../typescript/types';
+import { ChartData } from '../typescript/generated-types';
 
 @customElement('display-table')
 export class Table extends LitElement {
   @property({ type: Array })
   data: ChartData[] = [];
 
-  render() {
+  render(): TemplateResult {
     return html`
       <table>
         <thead>

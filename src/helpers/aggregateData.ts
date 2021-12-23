@@ -1,11 +1,15 @@
-import { LaunchesPastI, LaunchPastI } from '../typescript/types';
+import {
+  ChartData,
+  LaunchesPastDataFragment,
+} from '../typescript/generated-types';
 
-export function prepareDataForCharts(data: LaunchesPastI) {
+export function prepareDataForCharts(
+  data: LaunchesPastDataFragment[]
+): ChartData[] {
   // TODO improve this: check out Map/WeakMap and or UnderscoreJS
-  // @ts-ignore
-  const launchesYear = data.reduce((acc: LaunchesPastI, cur: LaunchPastI) => {
-    // @ts-ignore
-    acc[cur.launch_year] = (acc[cur.launch_year] || 0) + 1;
+  const launchesYear = data.reduce((acc: { [key: string]: number }, cur) => {
+    const launchYear = cur.launch_year || 'unknown';
+    acc[launchYear] = (acc[launchYear] || 0) + 1;
     return acc;
   }, {});
 

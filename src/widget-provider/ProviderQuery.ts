@@ -3,12 +3,14 @@ import { LitElement } from 'lit';
 
 import { customElement, property } from 'lit/decorators.js';
 
-import LaunchesPastGql from '../graphql/LaunchesPast.query.graphql';
+import LaunchesPast from '../graphql/LaunchesPast.query.graphql';
+import { LaunchesPastQueryVariables } from '../typescript/generated-types';
+import { ApolloQueryControllerI } from '../typescript/types';
 
 @customElement('provider-query')
 export class ProviderQuery extends LitElement {
   @property({ type: Object })
-  filters = {
+  filters: LaunchesPastQueryVariables = {
     limit: 50,
     missionName: '',
   };
@@ -29,9 +31,13 @@ export class ProviderQuery extends LitElement {
     }
   }
 
-  query = new ApolloQueryController(this, LaunchesPastGql, {
-    variables: {
-      ...this.filters,
-    },
-  });
+  query: ApolloQueryControllerI = new ApolloQueryController(
+    this,
+    LaunchesPast,
+    {
+      variables: {
+        ...this.filters,
+      },
+    }
+  );
 }

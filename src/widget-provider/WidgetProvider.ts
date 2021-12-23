@@ -1,25 +1,26 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@apollo-elements/components/apollo-client';
 
 import './ProviderQuery';
 import './InputNumber';
 import './InputText';
+import { CustomEventValueChanged } from '../typescript/types';
 
 @customElement('widget-provider')
 export class WidgetProvider extends LitElement {
   @property({ type: Number })
-  limit = 50;
+  limit: number = 50;
 
   @property({ type: String })
-  missionName = '';
+  missionName: string = '';
 
-  valueChanged(event: CustomEvent): void {
+  valueChanged(event: CustomEventValueChanged): void {
     // @ts-ignore
     this[event.detail.key] = event.detail.value;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <input-number
         key="limit"

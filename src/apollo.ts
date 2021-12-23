@@ -4,12 +4,12 @@ import {
   makeVar,
   ReactiveVar,
 } from '@apollo/client/core';
-import { DisplayMode } from './typescript/types';
+import { DisplayMode as DisplayModeEnum } from './typescript/generated-types';
 import { prepareDataForCharts } from './helpers/aggregateData';
 
 // @ts-ignore
-export const displayModeVar: ReactiveVar<DisplayMode> = makeVar(
-  DisplayMode.TABLE
+export const displayModeVar: ReactiveVar<DisplayModeEnum> = makeVar(
+  DisplayModeEnum.Table
 );
 
 export const launchesPerYearVar: ReactiveVar<any> = makeVar([]);

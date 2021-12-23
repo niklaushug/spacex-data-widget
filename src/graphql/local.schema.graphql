@@ -1,4 +1,15 @@
+enum DisplayMode {
+  BAR
+  PIE
+  TABLE
+}
+
+type ChartData {
+  name: String!
+  y: Int!
+}
+
 type Query {
-  displayMode: String
-  launchesPerYear: String
+  displayMode: DisplayMode!
+  launchesPerYear: ChartData!
 }

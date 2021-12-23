@@ -1,3 +1,6 @@
-query LaunchesPerYearGql {
-  launchesPerYear @client
+query LaunchesPerYear {
+  launchesPerYear @client {
+    name
+    y
+  }
 }

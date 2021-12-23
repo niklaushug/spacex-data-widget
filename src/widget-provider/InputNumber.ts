@@ -1,31 +1,35 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { CustomEventValueChanged } from '../typescript/types';
 
 @customElement('input-number')
 export class InputNumber extends LitElement {
   @property({ type: String })
-  key = '';
+  key: string = '';
 
   @property({ type: String })
-  label = '';
+  label: string = '';
 
   @property({ type: Number })
-  value = 0;
+  value: number = 0;
 
   changeHandler(event: InputEvent): void {
     this.value = +(event.target as HTMLInputElement).value;
 
-    this.dispatchEvent(
-      new CustomEvent('valueChanged', {
+    const customEvent: CustomEventValueChanged = new CustomEvent(
+      'valueChanged',
+      {
         detail: {
           key: this.key,
           value: this.value,
         },
-      })
+      }
     );
+
+    this.dispatchEvent(customEvent);
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <label>
         ${this.label}
