@@ -2,6 +2,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import html from '@web/rollup-plugin-html';
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import graphqlRollup from '@apollo-elements/rollup-plugin-graphql';
 import { terser } from 'rollup-plugin-terser';
 import { generateSW } from 'rollup-plugin-workbox';
 import path from 'path';
@@ -18,6 +19,7 @@ export default {
   preserveEntrySignatures: false,
 
   plugins: [
+    graphqlRollup(),
     /** Enable using HTML as rollup entrypoint */
     html({
       minify: true,
